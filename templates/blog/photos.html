@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="am-g am-g-fixed blog-fixed blog-content">
+  <figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{  pureview: 'true' }">
+      <div id="container">          
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+          <div><img src="{% static 'images/01.jpg' %}"><h3>Agfa</h3></div>
+
+          
+    </div> 
+  </figure>
+</div>
+
+{% endblock content %}
+{% block bottomfiles %}
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!--<![endif]-->
+<!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+<script src="{% static 'js/amazeui.min.js' %}"></script>
+<script src="{% static 'js/pinto.min.js' %}"></script>
+<script src="{% static 'js/img.js' %}"></script>
+{% endblock bottomfiles %}
