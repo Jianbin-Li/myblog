@@ -3,21 +3,21 @@
 
 {% block content %}
     <div class="am-u-md-8 am-u-sm-12">
-        {% for article in six_list %}
+        {% for article in list %}
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
                 <span class="blog-color">{{ article.pub_time }}&nbsp;</span>
                 <h1><a href="/article/{{ article.id }}/">{{ article.title }}</a></h1>
-                <p>{{ atricle.abstract }}</p>
+                <p>{{ article.abstract }}</p>
                 <p><a href="/article/{{ article.id }}/" class="blog-continue">continue reading</a></p>
             </div>
         </article>
         {% endfor %}
 
-        <ul class="am-pagination">
-            <li class="am-pagination-prev"><a href="">&laquo; Prev</a></li>
-            <li class="am-pagination-next"><a href="">Next &raquo;</a></li>
-        </ul>
+{#        <ul class="am-pagination">#}
+{#            <li class="am-pagination-prev"><a href="">&laquo; Prev</a></li>#}
+{#            <li class="am-pagination-next"><a href="">Next &raquo;</a></li>#}
+{#        </ul>#}
     </div>
 {% endblock content %}
 {% block me %}
@@ -26,11 +26,12 @@
             <h2 class="blog-text-center blog-title"><span>About ME</span></h2>
             <img src="{% static 'images/f19.jpg' %}" alt="about me" class="blog-entry-img" >
             <p>煎饼</p>
-            <p>好好学习</p>
-            <p>天天向上</p>
+            <p>とうか、君と君を囲むこの世界が、これからも幸せでありますように。</p>
         </div>
         <div class="blog-sidebar-widget blog-bor">
             <h2 class="blog-text-center blog-title"><span>Contact ME</span></h2>
+            <p>MAIL: leeown0410@gmail.com</p>
+            <p>QQ: 491256499</p>
             <p>
 {#                <a href=""><span class="am-icon-qq am-icon-fw am-primary blog-icon"></span></a>#}
                 <a href="https://github.com/Jianbin-Li"><span class="am-icon-github am-icon-fw blog-icon"></span></a>

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from blog.models import Blog
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -7,8 +8,24 @@ from blog.models import Blog
 # /index/
 def index(request):
     """个人博客首页"""
+    # 首页显示最新的6篇文章
+    articles = Blog.objects.get_all_article()[:6]
+    for a in articles:
+        print(a.abstract)
+
+    return render(request, 'blog/index.html', {'list': articles})
+
+
+# /article_list/(\d+)
+def article_list(request, page):
+    """文章列表页"""
     articles = Blog.objects.get_all_article()
-    return render(request, 'blog/index.html', {'six_list': articles})
+
+    # 每页显示8篇文章
+    paginator = Paginator(articles, 4)
+    result = paginator.page(int(page))
+
+    return render(request, 'blog/article_list.html', {'result': result})
 
 
 # /article/(\d+)/
