@@ -19,7 +19,19 @@ def index(request):
 # /article_list/(\d+)
 def article_list(request, page):
     """文章列表页"""
-    articles = Blog.objects.get_all_article()
+    articles = Blog.objects.get_all_article_without_code()
+
+    # 每页显示8篇文章
+    paginator = Paginator(articles, 4)
+    result = paginator.page(int(page))
+
+    return render(request, 'blog/article_list.html', {'result': result})
+
+
+# /article_list/(\d+)
+def code_list(request, page):
+    """文章列表页"""
+    articles = Blog.objects.get_all_code_article()
 
     # 每页显示8篇文章
     paginator = Paginator(articles, 4)

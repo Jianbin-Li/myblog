@@ -23,11 +23,9 @@ class ArticleAdmin(admin.ModelAdmin):
     form = ArticleForm
 
 
-admin.site.register(Blog, ArticleAdmin)
-
-
-# class BlogAdmin(admin.ModelAdmin):
+# class ArticleImageAdmin(admin.ModelAdmin):
 #     pass
-#
-#
-# admin.site.register(Blog, BlogAdmin)
+
+
+admin.site.register(Blog, ArticleAdmin)
+admin.site.register(ArticleImage)

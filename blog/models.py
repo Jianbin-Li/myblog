@@ -14,6 +14,16 @@ class BlogManager(models.Manager):
         articles = self.filter(is_delete=False).order_by('-pub_time')
         return articles
 
+    def get_all_code_article(self):
+        """获取最新的文章列表"""
+        articles = self.filter(is_delete=False, type=1).order_by('-pub_time')
+        return articles
+
+    def get_all_article_without_code(self):
+        """获取最新的文章列表"""
+        articles = self.filter(is_delete=False, type__in=[2, 3, 4]).order_by('-pub_time')
+        return articles
+
     def get_one_article_by_id(self, article_id):
         try:
             article = self.get(id=article_id)
@@ -60,3 +70,22 @@ class Blog(BaseModel):
 
     class Meta:
         db_table = 'article'
+
+
+class ArticleImageManager(models.Manager):
+    pass
+
+
+class ArticleImage(BaseModel):
+    """文章包含的图片类"""
+    article = models.ForeignKey('Blog', verbose_name='所属商品')
+    img_url = models.ImageField(upload_to='blog', verbose_name='文章图片')
+    img_name = models.CharField(max_length=20, verbose_name='图片名称')
+
+    objects = ArticleImageManager()
+
+    def __str__(self):
+        return self.img_name
+
+    class Meta:
+        db_table = "image"

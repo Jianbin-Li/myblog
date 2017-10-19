@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="am-u-md-8 am-u-sm-12">
+        {% for article in result %}
+        <article class="am-g blog-entry-article">
+            <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
+                <span class="blog-color">{{ article.pub_time }}&nbsp;</span>
+                <h1><a href="/article/{{ article.id }}/">{{ article.title }}</a></h1>
+                <p>{{ article.abstract }}</p>
+                <p><a href="/article/{{ article.id }}/" class="blog-continue">continue reading</a></p>
+            </div>
+        </article>
+        {% endfor %}
+
+        <ul class="am-pagination">
+            {% if result.has_previous %}
+            <li class="am-pagination-prev"><a href="/article_list/{{ result.previous_page_number }}">&laquo; Prev</a></li>
+            {% endif %}
+            {% if result.has_next %}
+            <li class="am-pagination-next"><a href="/article_list/{{ result.next_page_number }}">Next &raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock content %}
