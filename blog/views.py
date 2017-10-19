@@ -10,9 +10,6 @@ def index(request):
     """个人博客首页"""
     # 首页显示最新的6篇文章
     articles = Blog.objects.get_all_article()[:6]
-    for a in articles:
-        print(a.abstract)
-
     return render(request, 'blog/index.html', {'list': articles})
 
 
