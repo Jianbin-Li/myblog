@@ -30,8 +30,16 @@
      <!-- 上一篇和下一篇 -->
         <hr>
         <ul class="am-pagination blog-article-margin">
-          <li class="am-pagination-prev"><a href="#" class="">&laquo; 一切的回顾</a></li>
-          <li class="am-pagination-next"><a href="">不远的未来 &raquo;</a></li>
+          {% if prev == None %}
+            <li class="am-pagination-prev">&laquo; 前面没有了</li>
+          {% else %}
+            <li class="am-pagination-prev"><a href="/article/{{ prev.id }}" class="">&laquo; {{ prev.title }}</a></li>
+          {% endif %}
+          {% if next == None %}
+            <li class="am-pagination-next">后面没有了 &raquo;</li>
+          {% else %}
+            <li class="am-pagination-next"><a href="/article/{{ next.id }}" class="">{{ next.title }} &raquo;</a></li>
+          {% endif %}
         </ul>
         
         <hr>

@@ -9,14 +9,9 @@ from blog.enums import *
 class BlogManager(models.Manager):
     """博客模块管理器"""
 
-    def get_last_six_article(self):
-        """获取最新的6篇文章用于首页展示"""
-        articles = self.get_all_article()[:6]
-        return articles
-
     def get_all_article(self):
         """获取最新的文章列表"""
-        articles = self.order_by('-pub_time')
+        articles = self.filter(is_delete=False).order_by('-pub_time')
         return articles
 
     def get_one_article_by_id(self, article_id):
@@ -26,6 +21,15 @@ class BlogManager(models.Manager):
             return None
         else:
             return article
+
+    def get_page_article(self, article_id):
+        # 因为是按逆序排列,因此要颠倒
+        id_list = self.get_all_article().reverse()
+        for temp_index, temp in enumerate(id_list):
+            if temp.id == int(article_id):
+                next_article = id_list[temp_index + 1] if temp_index != (len(id_list)-1) else None
+                prev_article = id_list[temp_index - 1] if temp_index != 0 else None
+                return next_article, prev_article
 
 
 class Blog(BaseModel):

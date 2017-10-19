@@ -7,7 +7,7 @@ from blog.models import Blog
 # /index/
 def index(request):
     """个人博客首页"""
-    articles = Blog.objects.get_last_six_article()
+    articles = Blog.objects.get_all_article()
     return render(request, 'blog/index.html', {'six_list': articles})
 
 
@@ -15,8 +15,13 @@ def index(request):
 def article(request, article_id):
     """文章详情页"""
     # 根据id获取文章
-    article = Blog.objects.get_one_article_by_id(article_id)
-    return render(request, 'blog/article.html', {'article': article})
+    article_result = Blog.objects.get_one_article_by_id(article_id)
+    # 获取上/下一篇文章的名字和id
+    next_article, prev_article = Blog.objects.get_page_article(article_id)
+    # print(next_article)
+    # print(prev_article)
+    return render(request, 'blog/article.html', {'article': article_result, 'next': next_article,
+                                                 'prev': prev_article})
 
 
 # /photos/
