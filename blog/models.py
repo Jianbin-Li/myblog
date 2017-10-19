@@ -1,7 +1,7 @@
 from django.db import models
 from db.base_model import BaseModel
 from blog.enums import *
-from tinymce.models import HTMLField
+
 
 # Create your models here.
 
@@ -45,7 +45,7 @@ class Blog(BaseModel):
     # 文章第一段or摘要
     abstract = models.CharField(max_length=512, verbose_name="文章摘要")
     # 文章内容(富文本)
-    content = HTMLField(verbose_name="文章内容")
+    content = models.TextField(verbose_name="文章内容")
     # 分类
     type = models.SmallIntegerField(
         choices=article_type_choice, default=ELSE, verbose_name='文章分类')
