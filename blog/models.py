@@ -72,20 +72,40 @@ class Blog(BaseModel):
         db_table = 'article'
 
 
-class ArticleImageManager(models.Manager):
-    pass
+class CommentManager(models.Manager):
+
+    def get_content_by_article_id(self, article_id):
+        """根据文章id获取评论内容"""
+        try:
+            comments = self.filter(article_id=article_id, is_delete=False).order_by('id')
+        except:
+            comments = None
+        return comments
+
+    def add_one_comment(self, article_id, username, email, content):
+        """添加一条评论"""
+        obj_class = self.model
+        try:
+            comment = obj_class(article_id=article_id, username=username, email=email, content=content)
+            comment.save()
+            print(2)
+        except:
+            comment = None
+        else:
+            comment = 1
+
+        return comment
 
 
-class ArticleImage(BaseModel):
-    """文章包含的图片类"""
-    article = models.ForeignKey('Blog', verbose_name='所属商品')
-    img_url = models.ImageField(upload_to='blog', verbose_name='文章图片')
-    img_name = models.CharField(max_length=20, verbose_name='图片名称')
+class Comment(BaseModel):
+    """评论类"""
+    article = models.ForeignKey('blog', verbose_name='所属文章')
+    username = models.CharField(max_length=20, verbose_name='用户名')
+    email = models.EmailField(verbose_name='邮箱')
+    content = models.TextField(verbose_name="评论内容")
 
-    objects = ArticleImageManager()
-
-    def __str__(self):
-        return self.img_name
+    objects = CommentManager()
 
     class Meta:
-        db_table = "image"
+        db_table = 'comment'
+

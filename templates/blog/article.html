@@ -3,8 +3,38 @@
 {% load custom_markdown %}
 {% block topfiles %}
     <script src="{% static 'js/highlight.pack.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/solarized-light.css' %}">
     <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+        $(function(){
+            $('#btn').click(function(){
+                var username = $('.username').val();
+                var email = $('.email').val();
+                var content = $('.content').val();
+                var article_id = $(this).attr('article');
+                var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+
+                if(username.length==0||email.length==0||content.length==0){
+                    alert('信息不完整')
+                }
+                else {
+                    var params = {'username': username, 'email': email, 'content': content, 'article_id': article_id,
+                    "csrfmiddlewaretoken": csrf};
+
+                    $.post('/comment/', params, function (res) {
+                        if (res['data'] == 0) {
+                            alert('评论失败');
+                        }
+                        else if (res['data'] == 1) {
+                            location.href = res['next_url'];
+                        }
+                    })
+                }
+            });
+        })
+    </script>
+
 {% endblock topfiles %}
 {% block content %}
 <!-- content srart -->
@@ -20,7 +50,6 @@
           </p>
         </div>        
         <div class="am-article-bd">
-        <img src="assets/i/f17.jpg" alt="" class="blog-entry-img blog-article-margin">          
         <p class="class="am-article-lead"">
          {{ article.content|custom_markdown }}
         </p>
@@ -43,25 +72,60 @@
         </ul>
         
         <hr>
+{#        评论展示#}
+        {% if comments == None %}
+            <article class="am-article blog-article-p">
+                <div class="am-article-bd">
+                <p class="class="am-article-lead"">
+                暂无评论
+                </p>
+                </div>
+            <hr>
+            </article>
+        {% else %}
+        {% for comment in comments %}
+        <article class="am-article blog-article-p">
+            <div class="am-article-hd">
+                <p class="blog-color">
+                    {# <span><a href="#" class="blog-color">{{ article.type }} &nbsp;</a></span>- #}
+                    <span>#{{ forloop.counter }} &nbsp;-&nbsp;</span>
+                    <span>{{ comment.username }} &nbsp;/&nbsp;</span>
+                    <span>{{ comment.pub_time }}</span>
+                </p>
+            </div>
+            <div class="am-article-bd">
+                <p class="class="am-article-lead"">
+                {{ comment.content|custom_markdown }}
+                </p>
+            </div>
+            <hr>
+        </article>
+        {% endfor %}
+        {% endif %}
 
-        <form class="am-form am-g">
-            <h3 class="blog-comment">评论</h3>
+        <hr>
+    </div>
+</div>
+<div>
+        <div class="am-form am-g">
+            <h3 class="blog-comment">发表评论</h3>
           <fieldset>
             <div class="am-form-group am-u-sm-4 blog-clear-left">
-              <input type="text" class="" placeholder="用户名">
+              <input type="text" class="username" name="username" placeholder="用户名">
+                {% csrf_token %}
             </div>
             <div class="am-form-group am-u-sm-4">
-              <input type="email" class="" placeholder="联系邮箱(评论后不显示)">
+              <input type="email" class="email" name="email" placeholder="联系邮箱(评论后不显示)">
             </div>
         
             <div class="am-form-group">
-              <textarea class="" rows="5" placeholder="一字千金"></textarea>
+              <textarea class="content" rows="5" name="content" placeholder="一字千金"></textarea>
             </div>
-        
-            <p><button type="submit" class="am-btn am-btn-default">发表评论</button></p>
+
+            <p><button type="button" id='btn' article='{{ article.id }}' class="am-btn am-btn-default">发表评论</button></p>
           </fieldset>
-        </form>
-    </div>
+        </div>
+
 </div>
 <!-- content end -->
 {% endblock content %}

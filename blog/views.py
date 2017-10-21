@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from blog.models import Blog
+from blog.models import Blog, Comment
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -44,10 +45,33 @@ def article(request, article_id):
     article_result = Blog.objects.get_one_article_by_id(article_id)
     # 获取上/下一篇文章的名字和id
     next_article, prev_article = Blog.objects.get_page_article(article_id)
-    # print(next_article)
-    # print(prev_article)
+    # 根据id获取评论
+    comments = Comment.objects.get_content_by_article_id(article_id)
+    # 如果comments为空字符串 也返回None
+    if len(comments) == 0:
+        comments = None
+
     return render(request, 'blog/article.html', {'article': article_result, 'next': next_article,
-                                                 'prev': prev_article})
+                                                 'prev': prev_article, 'comments': comments})
+
+
+# /comment
+def add_comment(request):
+    """增加评论"""
+    article_id = request.POST.get('article_id')
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    content = request.POST.get('content')
+    # print(article_id)
+    # print(username, email, content)
+    # 添加评论
+    comment = Comment.objects.add_one_comment(article_id=article_id, username=username, email=email, content=content)
+    print(comment)
+    if comment is None:
+        return JsonResponse({'data': 0})
+    else:
+        next_url = '/article/{}'.format(article_id)
+        return JsonResponse({'data': 1, 'next_url': next_url})
 
 
 # /photos/

@@ -28,4 +28,4 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Blog, ArticleAdmin)
-admin.site.register(ArticleImage)
+admin.site.register(Comment, ArticleAdmin)
