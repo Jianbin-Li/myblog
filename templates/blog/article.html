@@ -14,11 +14,12 @@
                 var content = $('.content').val();
                 var article_id = $(this).attr('article');
                 var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+                var re = /^[a-z0-9][\w\.\-]*@[a-z0-9\-]+(\.[a-z]{2,5}){1,2}$/;
 
                 if(username.length==0||email.length==0||content.length==0){
                     alert('信息不完整')
                 }
-                else {
+                else if(re.test(email)){
                     var params = {'username': username, 'email': email, 'content': content, 'article_id': article_id,
                     "csrfmiddlewaretoken": csrf};
 
@@ -30,6 +31,9 @@
                             location.href = res['next_url'];
                         }
                     })
+                }
+                else{
+                    alert('邮箱格式不正确');
                 }
             });
         })
