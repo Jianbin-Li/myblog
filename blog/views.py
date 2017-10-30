@@ -20,7 +20,7 @@ def article_list(request, page):
     articles = Blog.objects.get_all_article_without_code()
 
     # 每页显示8篇文章
-    paginator = Paginator(articles, 4)
+    paginator = Paginator(articles, 6)
     result = paginator.page(int(page))
 
     return render(request, 'blog/article_list.html', {'result': result})
@@ -32,7 +32,7 @@ def code_list(request, page):
     articles = Blog.objects.get_all_code_article()
 
     # 每页显示8篇文章
-    paginator = Paginator(articles, 4)
+    paginator = Paginator(articles, 6)
     result = paginator.page(int(page))
 
     return render(request, 'blog/article_list.html', {'result': result})
@@ -69,9 +69,9 @@ def add_comment(request):
     print(comment)
     if comment is None:
         return JsonResponse({'data': 0})
-    else:
-        next_url = '/article/{}'.format(article_id)
-        return JsonResponse({'data': 1, 'next_url': next_url})
+
+    next_url = '/article/{}'.format(article_id)
+    return JsonResponse({'data': 1, 'next_url': next_url})
 
 
 # /photos/

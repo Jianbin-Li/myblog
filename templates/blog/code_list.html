@@ -16,10 +16,10 @@
 
         <ul class="am-pagination">
             {% if result.has_previous %}
-            <li class="am-pagination-prev"><a href="/article_list/{{ result.previous_page_number }}">&laquo; Prev</a></li>
+            <li class="am-pagination-prev"><a href="/code_list/{{ result.previous_page_number }}">&laquo; Prev</a></li>
             {% endif %}
             {% if result.has_next %}
-            <li class="am-pagination-next"><a href="/article_list/{{ result.next_page_number }}">Next &raquo;</a></li>
+            <li class="am-pagination-next"><a href="/code_list/{{ result.next_page_number }}">Next &raquo;</a></li>
             {% endif %}
         </ul>
     </div>
